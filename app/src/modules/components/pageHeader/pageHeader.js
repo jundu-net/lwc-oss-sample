@@ -2,40 +2,35 @@ import { LightningElement } from 'lwc';
 
 export default class PageHeader extends LightningElement {
 
-    PADDING = 12;
+    static get PADDING() { return 12 }
 
     shouldResizeHeader = false;
     shouldResetHeader = false;
-
-    headerHeight;
 
     connectedCallback() {
         // スクロールイベントを登録
         window.addEventListener('scroll', this.handleScroll.bind(this));
     }
-    renderedCallback() {
-        // ヘッダ部分の高さをダミー用に計算する
-        const headerElement = this.template.querySelector('div.myheader');
-        const titleElement = headerElement.querySelector('div.slds-page-header__col-title');
-        const gutters = headerElement.querySelectorAll('div.slds-page-header__row_gutters');
-        let guttersHeight = 0;
-        gutters.forEach(e => {
-            guttersHeight += e.clientHeight;
-        });
-        this.headerHeight = titleElement.clientHeight + guttersHeight + 32;
-    }
 
     handleScroll() {
         const headerElement = this.template.querySelector('div.myheader');
-        if (!this.shouldResizeHeader && window.scrollY < 100) {
+        if (!this.shouldResizeHeader && window.scrollY < 300) {
             this.shouldResizeHeader = true;
         }
         if (window.scrollY == 0) {
             this.shouldResetHeader = true;
         }
         if (this.shouldResizeHeader) {
+            // ヘッダ部分の高さをダミー用に計算する
+            const titleElement = headerElement.querySelector('div.slds-page-header__col-title');
+            const gutters = headerElement.querySelectorAll('div.slds-page-header__row_gutters');
+            let guttersHeight = 0;
+            gutters.forEach(e => {
+                guttersHeight += e.clientHeight;
+            });
+            const headerHeight = titleElement.clientHeight + guttersHeight + 32;    // TODO 32はheaderElementの上下のPaddingから取得すべき
             // パディングサイズ計算
-            const padding = window.scrollY < 13 ? 12 - window.scrollY : 0;
+            const padding = window.scrollY <= PageHeader.PADDING ? PageHeader.PADDING - window.scrollY : 0;
             // スタイル設定
             headerElement.style.zIndex = "98";
             headerElement.style.left = padding + "px";
@@ -47,9 +42,8 @@ export default class PageHeader extends LightningElement {
             if (padding == 0) {
                 headerElement.style.borderRadius = "0px";
                 // 詳細部分を半透明化
-                const gutters = headerElement.querySelectorAll('div.slds-page-header__row_gutters');
                 if (gutters.length > 0) {
-                    const t2 = window.scrollY > 12 ? window.scrollY - 12 : 0;
+                    const t2 = window.scrollY > PageHeader.PADDING ? window.scrollY - PageHeader.PADDING : 0;
                     let guttersHeight = 0;
                     gutters.forEach((e, k) => {
                         guttersHeight += e.clientHeight;
@@ -69,7 +63,7 @@ export default class PageHeader extends LightningElement {
                     });
                     // ヘッダ全体の高さを詳細の移動分だけ低くする
                     const heightDiff = guttersHeight > t2 ? t2 : guttersHeight;
-                    headerElement.style.height = (this.headerHeight - heightDiff) + "px";
+                    headerElement.style.height = (headerHeight - heightDiff) + "px";
                 }
             } else {
                 // 張り付いていない状態になったら角丸復活
@@ -77,7 +71,7 @@ export default class PageHeader extends LightningElement {
             }
             // ダミーの高さを設定する
             const proxyElement = this.template.querySelector('div.proxy');
-            proxyElement.style.height = this.headerHeight + "px";
+            proxyElement.style.height = headerHeight + "px";
         }
         if (this.shouldResetHeader) {
             this.reset();
