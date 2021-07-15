@@ -7,9 +7,11 @@
     "dependencies": {
         "compression": "^1.7.4",
         "express": "^4.17.1",
-        "helmet": "^4.6.0"
+        "helmet": "^4.6.0",
+        "lightning-base-components": "^1.12.4-alpha"
     },
     "devDependencies": {
+        "@salesforce-ux/design-system": "^2.15.8",
         "eslint": "^7.30.0",
         "eslint-plugin-inclusive-language": "^2.1.1",
         "husky": "^7.0.1",
