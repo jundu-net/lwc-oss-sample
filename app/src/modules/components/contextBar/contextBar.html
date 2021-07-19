@@ -1,12 +1,13 @@
 <template>
-<div style="position: fixed; z-index: 99; top: var(--lwc-heightHeader,3.125rem); width: 100%;">
     <div class="slds-context-bar">
         <div class="slds-context-bar__primary">
             <div
                 class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_click slds-no-hover">
+                <template if:true={appLauncerVisible}>
                 <div class="slds-context-bar__icon-action">
                     <button class="slds-button slds-icon-waffle_container slds-context-bar__button"
-                        title="Description of the icon when needed">
+                        title={appLauncherDescription}
+                        onclick={handleAppLauncherClick}>
                         <span class="slds-icon-waffle">
                             <span class="slds-r1"></span>
                             <span class="slds-r2"></span>
@@ -21,20 +22,20 @@
                         <span class="slds-assistive-text">Open App Launcher</span>
                     </button>
                 </div>
+                </template>
                 <span class="slds-context-bar__label-action slds-context-bar__app-name">
-                    <span class="slds-truncate" title="App Name">App Name</span>
+                    <span class="slds-truncate" title={appName}>
+                        <lightning-formatted-text value={appName}></lightning-formatted-text>
+                    </span>
                 </span>
             </div>
         </div>
         <nav class="slds-context-bar__secondary" role="navigation">
             <ul class="slds-grid">
-                <li class="slds-context-bar__item slds-is-active">
-                    <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Home">
-                        <span class="slds-assistive-text">Current Page:</span>
-                        <span class="slds-truncate" title="Home">Home</span>
-                    </a>
-                </li>
-                <li
+                <template for:each={navItems} for:item="navItem">
+                    <components-context-bar-item key={navItem.location} menu-title={navItem.title} location={navItem.location}></components-context-bar-item>
+                </template>
+                <!-- <li
                     class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_hover">
                     <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item">
                         <span class="slds-truncate" title="Menu Item">Groups</span>
@@ -79,24 +80,8 @@
                             </li>
                         </ul>
                     </div>
-                </li>
-                <li class="slds-context-bar__item">
-                    <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item">
-                        <span class="slds-truncate" title="Menu Item">Menu Item</span>
-                    </a>
-                </li>
-                <li class="slds-context-bar__item">
-                    <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item">
-                        <span class="slds-truncate" title="Menu Item">Menu Item</span>
-                    </a>
-                </li>
-                <li class="slds-context-bar__item">
-                    <a href="javascript:void(0);" class="slds-context-bar__label-action" title="Menu Item">
-                        <span class="slds-truncate" title="Menu Item">Menu Item</span>
-                    </a>
-                </li>
+                </li> -->
             </ul>
         </nav>
     </div>
-</div>
 </template>

@@ -1,0 +1,12 @@
+<template>
+    <li class={className}>
+        <a href="javascript:void(0);" class="slds-context-bar__label-action" title={menuTitle}>
+            <template if:true={isActive}>
+            <span class="slds-assistive-text">Current Page:</span>
+            </template>
+            <span class="slds-truncate" title={menuTitle}>
+                <lightning-formatted-text value={menuTitle}></lightning-formatted-text>
+            </span>
+        </a>
+    </li>
+</template>
