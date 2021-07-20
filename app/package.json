@@ -31,8 +31,8 @@
     "license": "MIT",
     "repository": "jundu-net/app",
     "scripts": {
-        "build": "lwc-services build -m production",
-        "build:development": "lwc-services build",
+        "build": "lwc-services build -m production -w ./webpack.config.js --webpack-plugin-overrides=HtmlWebpackPlugin",
+        "build:development": "lwc-services build -w ./webpack.config.js --webpack-plugin-overrides=HtmlWebpackPlugin",
         "lint": "eslint ./src/**/*.js",
         "postinstall": "husky install",
         "precommit": "npm run prettier:verify && [ $? -eq 0 ] && npm run lint",
@@ -43,6 +43,7 @@
         "test:unit:coverage": "lwc-services test:unit --coverage",
         "test:unit:debug": "lwc-services test:unit --debug",
         "test:unit:watch": "lwc-services test:unit --watch",
-        "watch": "lwc-services watch"
+        "watch": "lwc-services watch -w ./webpack.config.js --webpack-plugin-overrides=HtmlWebpackPlugin",
+        "sniff": "lwc-services sniff -d sniff/ -w ./webpack.config.js --webpack-plugin-overrides=HtmlWebpackPlugin"
     }
 }
