@@ -1,6 +1,11 @@
 <template>
     <li class={className}>
-        <a href="javascript:void(0);" class="slds-context-bar__label-action" title={menuTitle}>
+        <a href="javascript:void(0);" class="slds-context-bar__label-action" title={menuTitle} onclick={handleClick}>
+            <template if:true={hasIcon}>
+            <div class="slds-media__figure">
+                <lightning-icon icon-name={iconName} alternative-text={iconTitle} title={iconTitle} size="x-small"></lightning-icon>
+            </div>
+            </template>
             <template if:true={isActive}>
             <span class="slds-assistive-text">Current Page:</span>
             </template>

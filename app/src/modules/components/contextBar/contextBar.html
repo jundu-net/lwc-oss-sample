@@ -33,7 +33,13 @@
         <nav class="slds-context-bar__secondary" role="navigation">
             <ul class="slds-grid">
                 <template for:each={navItems} for:item="navItem">
-                    <components-context-bar-item key={navItem.location} menu-title={navItem.title} location={navItem.location}></components-context-bar-item>
+                    <components-context-bar-item
+                        key={navItem.location}
+                        menu-title={navItem.title}
+                        location={navItem.location}
+                        utility-icon-name={navItem.icon}
+                        selected-location={selectedLocation}
+                        onitemclick={handleItemClick}></components-context-bar-item>
                 </template>
                 <!-- <li
                     class="slds-context-bar__item slds-context-bar__dropdown-trigger slds-dropdown-trigger slds-dropdown-trigger_hover">

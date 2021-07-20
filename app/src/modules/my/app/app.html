@@ -1,9 +1,11 @@
 <template>
     <section class="main-section">
-        <fragments-global-header></fragments-global-header>
+        <fragments-global-header nav-items={navItems} nav-selected-item={navSelectedItem} onnavigation={handleNavigation}></fragments-global-header>
         <div class="slds-brand-band slds-brand-band_medium"></div>
         <main>
-            <view-home></view-home>
+            <template if:true={hasView}>
+                <dynamic-view lwc:dynamic={view.component}></dynamic-view>
+            </template>
         </main>
     </section>
 </template>
