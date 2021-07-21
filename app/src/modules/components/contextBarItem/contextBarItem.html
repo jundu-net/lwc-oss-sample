@@ -1,7 +1,7 @@
 <template>
     <li class={className}>
         <a href="javascript:void(0);" class="slds-context-bar__label-action" title={menuTitle} onclick={handleClick}>
-            <template if:true={hasIcon}>
+            <template if:true={iconName}>
             <div class="slds-media__figure">
                 <lightning-icon icon-name={iconName} alternative-text={iconTitle} title={iconTitle} size="x-small"></lightning-icon>
             </div>

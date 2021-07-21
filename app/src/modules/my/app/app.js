@@ -23,11 +23,6 @@ export default class App extends LightningElement {
 
     view;
 
-    get hasView() {
-        return this.view != undefined;
-    }
-
-
     constructor() {
         super();
         this.router.on({

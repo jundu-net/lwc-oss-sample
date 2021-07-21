@@ -35,10 +35,6 @@ export default class ContextBarItem extends LightningElement {
 
     isRendered = false;
 
-    get hasIcon() {
-        return this.iconName != "";
-    }
-
     className = "slds-context-bar__item";
 
     get isActive() {
