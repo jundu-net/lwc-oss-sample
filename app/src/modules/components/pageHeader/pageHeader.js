@@ -1,8 +1,14 @@
-import { LightningElement } from 'lwc';
+import { LightningElement, api } from 'lwc';
 
 export default class PageHeader extends LightningElement {
 
     static get PADDING() { return 12 }
+
+    @api title;
+    @api subTitle;
+    @api iconName;
+    @api iconAlternativeText;
+    @api iconTitle;
 
     shouldResizeHeader = false;
     shouldResetHeader = false;
@@ -47,8 +53,7 @@ export default class PageHeader extends LightningElement {
                     let guttersHeight = 0;
                     gutters.forEach((e, k) => {
                         guttersHeight += e.clientHeight;
-                        const alpha = t2 > guttersHeight ? guttersHeight : t2;
-                        if (alpha == guttersHeight) {
+                        if (t2 >= guttersHeight) {
                             // 完全にスクロールしたら非表示
                             e.style.visibility = "hidden";
                             if (k >= gutters.length - 1) {
@@ -58,7 +63,8 @@ export default class PageHeader extends LightningElement {
                         } else {
                             e.style.visibility = "";
                         }
-                        e.style.opacity = (1.0-(alpha / guttersHeight));
+                        const alpha = 1.0 - (((t2 > guttersHeight ? guttersHeight : t2) / guttersHeight) * 1.5);
+                        e.style.opacity = alpha < 0 ? 0 : alpha;
                         e.style.transform = "translate3d(0px, -" + t2 + "px, 0px)";
                     });
                     // ヘッダ全体の高さを詳細の移動分だけ低くする

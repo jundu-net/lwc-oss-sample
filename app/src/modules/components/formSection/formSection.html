@@ -1,0 +1,21 @@
+<template>
+    <div class={sectionClassSet}>
+        <template if:true={title}>
+        <h3 class="slds-section__title slds-theme_shade">
+            <button class="slds-button slds-section__title-action" onclick={handleClick}>
+                <svg class="slds-section__title-action-icon slds-button__icon slds-button__icon_left">
+                    <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#switch"></use>
+                </svg>
+                <span class="slds-truncate" title={title}>
+                    <lightning-formatted-text value={title}></lightning-formatted-text>
+                </span>
+            </button>
+        </h3>
+        </template>
+        <div class={contentClassSet}>
+            <div class="slds-form" role="list">
+                <slot></slot>
+            </div>
+        </div>
+    </div>
+</template>

@@ -1,0 +1,19 @@
+<template>
+    <template if:true={isDouble}>
+        <div class="slds-form__row">
+            <div class="slds-form__item" role="listitem">
+                <slot name="left"></slot>
+            </div>
+            <div class="slds-form__item" role="listitem">
+                <slot name="right"></slot>
+            </div>
+        </div>
+    </template>
+    <template if:false={isDouble}>
+        <div class="slds-form__row slds-form-element_1-col">
+            <div class="slds-form__item" role="listitem">
+                <slot></slot>
+            </div>
+        </div>
+    </template>
+</template>

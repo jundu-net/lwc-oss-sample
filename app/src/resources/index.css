@@ -1,0 +1,27 @@
+.main-row {
+    margin: var(--lwc-templateGutters, 0.75rem) auto;
+}
+.region-sidebar-right {
+    padding-left: var(--lwc-templateGutters, 0.75rem);
+}
+
+.slds-tabs_card, .slds-tabs_card.slds-tabs_card {
+    padding: var(--lwc-varSpacingVerticalSmall,0.75rem) var(--lwc-varSpacingHorizontalMedium,1rem);
+    background: var(--sds-c-card-color-background, var(--lwc-cardColorBackground,rgb(255, 255, 255)));
+    border-width: var(--sds-c-card-sizing-border, var(--lwc-borderWidthThin,1px));
+    border-style: solid;
+    border-color: var(--sds-c-card-color-border, var(--lwc-cardColorBorder,rgb(221, 219, 218)));
+    border-radius: var(--sds-c-card-radius-border, var(--lwc-borderRadiusMedium,0.25rem));
+    box-shadow: var(--sds-c-card-shadow, var(--lwc-cardShadow,0 2px 2px 0 rgba(0, 0, 0, 0.10)));
+}
+
+.form-element {
+    padding: var(--lwc-varSpacingXxSmall,0.25rem) var(--lwc-spacingXxSmall,0.25rem);
+}
+.slds-form-element_horizontal .slds-form-element__control, .slds-form_horizontal .slds-form-element .slds-form-element__control, .slds-form_stacked .slds-form-element_horizontal .slds-form-element__control {
+    padding-left: 33%;
+    clear: none;
+}
+.slds-form-element_1-col .slds-form-element_horizontal:not(.empty-label) .slds-form-element__control {
+    padding-left: calc((50% - 1rem) * 0.33);
+}

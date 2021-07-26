@@ -1,0 +1,10 @@
+.primary-row {
+    z-index: 3;
+}
+.secondary-row {
+    z-index: 2;
+}
+.v-center {
+    display: flex;
+    align-items: center;
+}

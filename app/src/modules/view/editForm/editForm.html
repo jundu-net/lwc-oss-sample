@@ -1,3 +1,317 @@
 <template>
-    aaaaa
+    <div class="slds-template_default">
+
+        <lightning-layout>
+            <lightning-layout-item size="12">
+                <components-page-header
+                        class="slds-col slds-size_1-of-1"
+                        title="入力フォームサンプル"
+                        sub-title="様々なインプット項目のレイアウトを試してみます。"
+                        icon-name="standard:form"
+                        icon-title="form">
+                </components-page-header>
+            </lightning-layout-item>
+        </lightning-layout>
+
+        <lightning-layout class="main-row">
+            <lightning-layout-item size="8">
+                <div class="slds-card slds-p-around_small">
+
+                    <components-form-section title="サンプルセクション" is-open="true" minimize-vertical="true">
+                        <components-form-row is-double="true">
+                            <components-form-item slot="left" label="日本語項目" type="text" value="じゅげむじゅげむ"></components-form-item>
+                            <components-form-item slot="right" label="日本語項目" type="text" value="じゅげむじゅげむ"></components-form-item>
+                        </components-form-row>
+                        <components-form-row>
+                            <components-form-item label="らべる" type="text" value="テキスト値あああああ"></components-form-item>
+                        </components-form-row>
+                        <components-form-row>
+                            <components-form-item label="らべる" type="text" value="テキスト値あああああ"></components-form-item>
+                        </components-form-row>
+                    </components-form-section>
+
+                    <div class="slds-section slds-is-open">
+                        <h3 class="slds-section__title slds-theme_shade">
+                            <span class="slds-truncate slds-p-horizontal_small" title="Section Title">
+                                <lightning-formatted-text value="タイトル"></lightning-formatted-text>
+                            </span>
+                        </h3>
+                        <div class="slds-section__content">
+                            <div class="slds-form" role="list">
+                                    <div class="slds-form__row">
+                                        <div class="slds-form__item" role="listitem">
+                                            <div class="slds-form-element slds-form-element_readonly slds-form-element_horizontal">
+                                                <div class="slds-form-element__label no-utility-icon">
+                                                    <lightning-formatted-text value="ラベル"></lightning-formatted-text>
+                                                </div>
+                                                <div class="slds-form-element__control">
+                                                    <span class="slds-form-element__static slds-grow word-break-ie11 is-read-only">
+                                                        <components-read-only-field type="text" value="text value"></components-read-only-field>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="slds-form__item" role="listitem">
+                                            <div class="slds-form-element slds-form-element_readonly slds-form-element_horizontal">
+                                                <div class="slds-form-element__label no-utility-icon">
+                                                    <lightning-formatted-text value="ラベル"></lightning-formatted-text>
+                                                </div>
+                                                <div class="slds-form-element__control">
+                                                    <span class="slds-form-element__static slds-grow word-break-ie11 is-read-only">
+                                                        <components-read-only-field type="text" value="text value"></components-read-only-field>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="slds-form__row slds-form-element_1-col">
+<div class="slds-form__item" role="listitem">
+    <div class="slds-form-element slds-form-element_readonly slds-form-element_horizontal">
+        <div class="slds-form-element__label no-utility-icon">
+            <lightning-formatted-text value="ラベル"></lightning-formatted-text>
+        </div>
+        <div class="slds-form-element__control">
+            <span class="slds-form-element__static slds-grow word-break-ie11 is-read-only">
+                <components-read-only-field type="text" value="text value"></components-read-only-field>
+            </span>
+        </div>
+    </div>
+</div>
+
+<!-- 
+                                        <template if:true={row.isDouble}>
+                                            <div class="slds-form__item" role="listitem">
+                                                <template if:true={row.hasItemLeft}>
+                                                    <div class="slds-form-element slds-form-element_readonly slds-form-element_horizontal">
+                                                        <div class="slds-form-element__label no-utility-icon">
+                                                            <lightning-formatted-text value={row.itemLeft.label}></lightning-formatted-text>
+                                                        </div>
+                                                        <div class="slds-form-element__control">
+                                                            <span class="slds-form-element__static slds-grow word-break-ie11 is-read-only">
+                                                                <components-read-only-field type={row.itemLeft.type}
+                                                                    value={row.itemLeft.value}></components-read-only-field>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                            <div class="slds-form__item" role="listitem">
+                                                <template if:true={row.hasItemRight}>
+                                                    <div class="slds-form-element slds-form-element_readonly slds-form-element_horizontal">
+                                                        <div class="slds-form-element__label no-utility-icon">
+                                                            <lightning-formatted-text value={row.itemRight.label}>
+                                                            </lightning-formatted-text>
+                                                        </div>
+                                                        <div class="slds-form-element__control">
+                                                            <span class="slds-form-element__static slds-grow word-break-ie11 is-read-only">
+                                                                <components-read-only-field type={row.itemRight.type}
+                                                                    value={row.itemRight.value}></components-read-only-field>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </template>
+
+                                        <template if:true={row.isSingle}>
+                                            <div class="slds-form__item" role="listitem">
+                                                <template if:true={row.hasItem}>
+                                                    <div
+                                                        class="slds-form-element slds-form-element_horizontal slds-form-element_readonly slds-form-element_1-col">
+                                                        <div class="slds-form-element__label no-utility-icon">
+                                                            <lightning-formatted-text value={row.item.label}></lightning-formatted-text>
+                                                        </div>
+                                                        <div class="slds-form-element__control">
+                                                            <span class="slds-form-element__static slds-grow word-break-ie11 is-read-only">
+                                                                <components-read-only-field type={row.item.type} value={row.item.value}>
+                                                                </components-read-only-field>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </template>
+                                            </div>
+                                        </template>
+ -->
+                                    </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div class="slds-form__row slds-grid slds-size_1-of-1">
+                        <div class="slds-form-item">
+                            <div class="slds-form-element slds-hint-parent slds-form-element_readonly slds-form-element_horizontal">
+                                <div class="slds-form-element__label">ラベル</div>
+                                <div class="slds-form-element__control"><div style="width: 100%;">値</div></div>
+                            </div>
+                        </div>
+                        <div class="slds-form-item">
+                            <div class="slds-form-element slds-hint-parent slds-form-element_readonly slds-form-element_horizontal">
+                                <div class="slds-form-element__label">ラベル</div>
+                                <div class="slds-form-element__control">値</div>
+                            </div>
+                        </div>
+                    </div> -->
+
+                    <!-- <lightning-layout>
+                        <lightning-layout-item flexibility="auto" class="form-item">
+                            <lightning-layout class="form-element slds-form-element_horizontal">
+                                <lightning-layout-item class="slds-form-element__label">ラベル</lightning-layout-item>
+                                <lightning-layout-item class="slds-form-element__control">値</lightning-layout-item>
+                            </lightning-layout>
+                        </lightning-layout-item> -->
+                        <!-- <lightning-layout-item flexibility="auto" class="form-item">
+                        b
+                        </lightning-layout-item> -->
+                    <!-- </lightning-layout> -->
+                </div>
+                <!-- <lightning-card variant="narrow">
+                    <p class="slds-p-horizontal_small">Card Body (custom component)</p>
+                </lightning-card> -->
+            </lightning-layout-item>
+            <lightning-layout-item class="region-sidebar-right" size="4">
+                <lightning-card>
+                    <div slot="title">
+                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                            <div class="slds-media__figure">
+                                <span class="slds-icon_container slds-icon-standard-account" title="account">
+                                    <svg class="slds-icon slds-icon_small" aria-hidden="true">
+                                        <use xlink:href="/assets/icons/standard-sprite/svg/symbols.svg#account"></use>
+                                    </svg>
+                                    <span class="slds-assistive-text">account</span>
+                                </span>
+                            </div>
+                            <div class="slds-media__body">
+                                <h2 class="slds-card__header-title">
+                                    <a href="#" class="slds-card__header-link slds-truncate" title="Accounts">
+                                        <span>Accounts</span>
+                                    </a>
+                                </h2>
+                            </div>
+                        </header>
+                    </div>
+                    <p class="slds-p-horizontal_small" title="Field2 (3)">Field 2 (3)
+                        <lightning-button-icon icon-name="utility:down" variant="border-filled" size="small"
+                            alternative-text="More Actions"></lightning-button-icon>
+                    </p>
+                    <p class="slds-p-horizontal_small">Eligibility</p>
+                </lightning-card>
+            </lightning-layout-item>
+        </lightning-layout>
+
+        <div class="slds-grid slds-wrap">
+
+            <!-- <components-page-header class="slds-col slds-size_1-of-1"></components-page-header> -->
+
+            <div class="slds-col slds-size_1-of-1">
+
+                <lightning-card>
+                    <div slot="title">
+                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                            <div class="slds-media__figure">
+                                <lightning-icon icon-name="standard:account" alternative-text="Account" title="Account" size="small"></lightning-icon>
+                            </div>
+                            <div class="slds-media__body">
+                                <h2 class="slds-card__header-title">
+                                    <a href="#" class="slds-card__header-link slds-truncate" title="Accounts">
+                                        <span>Accounts</span>
+                                    </a>
+                                </h2>
+                            </div>
+                        </header>
+                    </div>
+                    <p class="slds-p-horizontal_small">Card Body (custom component)</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                    <p>aaa</p>
+                </lightning-card>
+            </div>
+        </div>
+    </div>
 </template>
