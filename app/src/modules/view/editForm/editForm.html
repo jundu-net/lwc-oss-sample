@@ -16,160 +16,32 @@
         <lightning-layout class="main-row">
             <lightning-layout-item size="8">
                 <div class="slds-card slds-p-around_small">
-
-                    <components-form-section title="サンプルセクション" is-open="true" minimize-vertical="true">
+                    <components-form-section title="表示のみ" is-open="true">
                         <components-form-row is-double="true">
-                            <components-form-item slot="left" label="日本語項目" type="text" value="じゅげむじゅげむ"></components-form-item>
-                            <components-form-item slot="right" label="日本語項目" type="text" value="じゅげむじゅげむ"></components-form-item>
+                            <components-form-item slot="left" label="日本語項目" type="text" value={formData.field1}></components-form-item>
+                            <components-form-item slot="right" label="日本語項目" type="text" value={formData.field2}></components-form-item>
                         </components-form-row>
-                        <components-form-row>
-                            <components-form-item label="らべる" type="text" value="テキスト値あああああ"></components-form-item>
+                        <components-form-row is-double="true">
+                            <components-form-item slot="right" label="らべる" type="datetime" value="2021-07-27T08:30:28+09:00"></components-form-item>
                         </components-form-row>
                         <components-form-row>
                             <components-form-item label="らべる" type="text" value="テキスト値あああああ"></components-form-item>
                         </components-form-row>
                     </components-form-section>
 
-                    <div class="slds-section slds-is-open">
-                        <h3 class="slds-section__title slds-theme_shade">
-                            <span class="slds-truncate slds-p-horizontal_small" title="Section Title">
-                                <lightning-formatted-text value="タイトル"></lightning-formatted-text>
-                            </span>
-                        </h3>
-                        <div class="slds-section__content">
-                            <div class="slds-form" role="list">
-                                    <div class="slds-form__row">
-                                        <div class="slds-form__item" role="listitem">
-                                            <div class="slds-form-element slds-form-element_readonly slds-form-element_horizontal">
-                                                <div class="slds-form-element__label no-utility-icon">
-                                                    <lightning-formatted-text value="ラベル"></lightning-formatted-text>
-                                                </div>
-                                                <div class="slds-form-element__control">
-                                                    <span class="slds-form-element__static slds-grow word-break-ie11 is-read-only">
-                                                        <components-read-only-field type="text" value="text value"></components-read-only-field>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="slds-form__item" role="listitem">
-                                            <div class="slds-form-element slds-form-element_readonly slds-form-element_horizontal">
-                                                <div class="slds-form-element__label no-utility-icon">
-                                                    <lightning-formatted-text value="ラベル"></lightning-formatted-text>
-                                                </div>
-                                                <div class="slds-form-element__control">
-                                                    <span class="slds-form-element__static slds-grow word-break-ie11 is-read-only">
-                                                        <components-read-only-field type="text" value="text value"></components-read-only-field>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="slds-form__row slds-form-element_1-col">
-<div class="slds-form__item" role="listitem">
-    <div class="slds-form-element slds-form-element_readonly slds-form-element_horizontal">
-        <div class="slds-form-element__label no-utility-icon">
-            <lightning-formatted-text value="ラベル"></lightning-formatted-text>
-        </div>
-        <div class="slds-form-element__control">
-            <span class="slds-form-element__static slds-grow word-break-ie11 is-read-only">
-                <components-read-only-field type="text" value="text value"></components-read-only-field>
-            </span>
-        </div>
-    </div>
-</div>
-
-<!-- 
-                                        <template if:true={row.isDouble}>
-                                            <div class="slds-form__item" role="listitem">
-                                                <template if:true={row.hasItemLeft}>
-                                                    <div class="slds-form-element slds-form-element_readonly slds-form-element_horizontal">
-                                                        <div class="slds-form-element__label no-utility-icon">
-                                                            <lightning-formatted-text value={row.itemLeft.label}></lightning-formatted-text>
-                                                        </div>
-                                                        <div class="slds-form-element__control">
-                                                            <span class="slds-form-element__static slds-grow word-break-ie11 is-read-only">
-                                                                <components-read-only-field type={row.itemLeft.type}
-                                                                    value={row.itemLeft.value}></components-read-only-field>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </template>
-                                            </div>
-                                            <div class="slds-form__item" role="listitem">
-                                                <template if:true={row.hasItemRight}>
-                                                    <div class="slds-form-element slds-form-element_readonly slds-form-element_horizontal">
-                                                        <div class="slds-form-element__label no-utility-icon">
-                                                            <lightning-formatted-text value={row.itemRight.label}>
-                                                            </lightning-formatted-text>
-                                                        </div>
-                                                        <div class="slds-form-element__control">
-                                                            <span class="slds-form-element__static slds-grow word-break-ie11 is-read-only">
-                                                                <components-read-only-field type={row.itemRight.type}
-                                                                    value={row.itemRight.value}></components-read-only-field>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </template>
-                                            </div>
-                                        </template>
-
-                                        <template if:true={row.isSingle}>
-                                            <div class="slds-form__item" role="listitem">
-                                                <template if:true={row.hasItem}>
-                                                    <div
-                                                        class="slds-form-element slds-form-element_horizontal slds-form-element_readonly slds-form-element_1-col">
-                                                        <div class="slds-form-element__label no-utility-icon">
-                                                            <lightning-formatted-text value={row.item.label}></lightning-formatted-text>
-                                                        </div>
-                                                        <div class="slds-form-element__control">
-                                                            <span class="slds-form-element__static slds-grow word-break-ie11 is-read-only">
-                                                                <components-read-only-field type={row.item.type} value={row.item.value}>
-                                                                </components-read-only-field>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                </template>
-                                            </div>
-                                        </template>
- -->
-                                    </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- <div class="slds-form__row slds-grid slds-size_1-of-1">
-                        <div class="slds-form-item">
-                            <div class="slds-form-element slds-hint-parent slds-form-element_readonly slds-form-element_horizontal">
-                                <div class="slds-form-element__label">ラベル</div>
-                                <div class="slds-form-element__control"><div style="width: 100%;">値</div></div>
-                            </div>
-                        </div>
-                        <div class="slds-form-item">
-                            <div class="slds-form-element slds-hint-parent slds-form-element_readonly slds-form-element_horizontal">
-                                <div class="slds-form-element__label">ラベル</div>
-                                <div class="slds-form-element__control">値</div>
-                            </div>
-                        </div>
-                    </div> -->
-
-                    <!-- <lightning-layout>
-                        <lightning-layout-item flexibility="auto" class="form-item">
-                            <lightning-layout class="form-element slds-form-element_horizontal">
-                                <lightning-layout-item class="slds-form-element__label">ラベル</lightning-layout-item>
-                                <lightning-layout-item class="slds-form-element__control">値</lightning-layout-item>
-                            </lightning-layout>
-                        </lightning-layout-item> -->
-                        <!-- <lightning-layout-item flexibility="auto" class="form-item">
-                        b
-                        </lightning-layout-item> -->
-                    <!-- </lightning-layout> -->
+                    <components-form-section title="編集可" is-open="true">
+                        <components-form-row is-double="true">
+                            <lightning-input slot="left" data-id="field1" type="text" label="日本語項目" value={formData.field1} onchange={handleChange} variant="label-inline"></lightning-input>
+                            <lightning-input slot="right" data-id="field2" type="text" label="日本語項目" value={formData.field2} onchange={handleChange} variant="label-inline"></lightning-input>
+                        </components-form-row>
+                        <components-form-row is-double="true">
+                            <lightning-input slot="right" type="text" label="らべる" value="テキスト値あああああ" variant="label-inline"></lightning-input>
+                        </components-form-row>
+                        <components-form-row>
+                            <lightning-input type="text" label="らべる" value="テキスト値あああああ" variant="label-inline"></lightning-input>
+                        </components-form-row>
+                    </components-form-section>
                 </div>
-                <!-- <lightning-card variant="narrow">
-                    <p class="slds-p-horizontal_small">Card Body (custom component)</p>
-                </lightning-card> -->
             </lightning-layout-item>
             <lightning-layout-item class="region-sidebar-right" size="4">
                 <lightning-card>
