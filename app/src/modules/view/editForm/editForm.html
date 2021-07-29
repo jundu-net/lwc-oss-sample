@@ -13,6 +13,21 @@
             </lightning-layout-item>
         </lightning-layout>
 
+        <!--
+            日付
+            数値
+            金額
+            チェックボックス、チェック付きボタン、トグル
+            メール
+            パスワード
+            電話
+            URL
+
+            住所
+            ロケーション
+            氏名
+        -->
+
         <lightning-layout class="main-row">
             <lightning-layout-item size="8">
                 <div class="slds-card slds-p-around_small">
@@ -22,7 +37,8 @@
                             <components-form-item slot="right" label="日本語項目" type="text" value={formData.field2}></components-form-item>
                         </components-form-row>
                         <components-form-row is-double="true">
-                            <components-form-item slot="right" label="らべる" type="datetime" value="2021-07-27T08:30:28+09:00"></components-form-item>
+                            <components-form-item slot="left" label="日付" type="date" value="2021-07-27T13:30:28+09:00"></components-form-item>
+                            <components-form-item slot="right" label="日時" type="datetime" value="2021-07-27T13:30:28+09:00"></components-form-item>
                         </components-form-row>
                         <components-form-row>
                             <components-form-item label="らべる" type="text" value="テキスト値あああああ"></components-form-item>
@@ -35,7 +51,10 @@
                             <lightning-input slot="right" data-id="field2" type="text" label="日本語項目" value={formData.field2} onchange={handleChange} variant="label-inline"></lightning-input>
                         </components-form-row>
                         <components-form-row is-double="true">
-                            <lightning-input slot="right" type="text" label="らべる" value="テキスト値あああああ" variant="label-inline"></lightning-input>
+                            <lightning-input slot="left" type="date" label="日付" value="" variant="label-inline"></lightning-input>
+                            <components-form-item slot="right" label="日時" is-editable="true">
+                                <lightning-input type="datetime" label="日時" value="" variant="label-hidden"></lightning-input>
+                            </components-form-item>
                         </components-form-row>
                         <components-form-row>
                             <lightning-input type="text" label="らべる" value="テキスト値あああああ" variant="label-inline"></lightning-input>
@@ -72,6 +91,9 @@
                 </lightning-card>
             </lightning-layout-item>
         </lightning-layout>
+
+
+
 
         <div class="slds-grid slds-wrap">
 

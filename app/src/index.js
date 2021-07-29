@@ -1,4 +1,4 @@
-import '@lwc/synthetic-shadow';
+// @lwc/synthetic-shadowは、先に読み込まれるprepare.js側に記載
 import { createElement } from 'lwc';
 import MyApp from 'my/app';
 

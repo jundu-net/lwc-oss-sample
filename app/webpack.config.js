@@ -5,7 +5,7 @@ class HtmlWebpackPlugin2 extends HtmlWebpackPlugin {}
 
 module.exports = {
     entry: {
-        index: './src/index.js',
+        index: ['./src/prepare.js', './src/index.js'],  // 日付フォーマット関連処理を上書きするため先にprepare.jsを読み込む
         login: './src/login.js',
     },
     // output: {
@@ -115,7 +115,14 @@ module.exports = {
                     "name": "@salesforce/i18n/showJapaneseCalendar",
                     "path": __dirname + "/src/scopedImports/@salesforce-i18n-showJapaneseCalendar.js"
                 },
-
+                {
+                    "name": "@salesforce/label/Duration.secondsLater",
+                    "path":  __dirname + "/src/scopedImports/@salesforce-label-Duration.secondsLater.js"
+                },
+                {
+                    "name": "@salesforce/label/Duration.secondsAgo",
+                    "path":  __dirname + "/src/scopedImports/@salesforce-label-Duration.secondsAgo.js"
+                },
             ]
         })
     ]
