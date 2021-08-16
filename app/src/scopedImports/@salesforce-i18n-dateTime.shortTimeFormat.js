@@ -1,1 +1,1 @@
-export default 'hh:mm';
+export default 'HH:mm';
