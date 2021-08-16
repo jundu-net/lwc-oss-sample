@@ -11,13 +11,14 @@
     },
     "devDependencies": {
         "@salesforce-ux/design-system": "^2.15.8",
-        "lightning-base-components": "^1.12.4-alpha",
-        "navigo": "^8.11.1",
         "date-fns": "^2.23.0",
+        "date-fns-tz": "^1.1.6",
         "eslint": "^7.30.0",
         "eslint-plugin-inclusive-language": "^2.1.1",
         "husky": "^7.0.1",
+        "lightning-base-components": "^1.12.4-alpha",
         "lwc-services": "^3.1.2",
+        "navigo": "^8.11.1",
         "prettier": "^2.3.2"
     },
     "engines": {

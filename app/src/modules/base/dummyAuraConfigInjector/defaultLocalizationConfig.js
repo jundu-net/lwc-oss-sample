@@ -9,38 +9,25 @@ import {
     TIME_SEPARATOR,
 } from './iso8601Utils/iso8601Utils';
 import Duration from './defaultDurationConfig';
-import { format as formatDateFns } from 'date-fns';
-
-const MONTH_NAMES = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
-    'August',
-    'September',
-    'October',
-    'November',
-    'December',
-];
+import mediumDateTimeFormat from '@salesforce/i18n/dateTime.mediumDateTimeFormat';
+import shortDateFormat from '@salesforce/i18n/dateTime.shortDateFormat';
+import mediumDateFormat from '@salesforce/i18n/dateTime.mediumDateFormat';
+import longDateFormat from '@salesforce/i18n/dateTime.longDateFormat';
+import shortTimeFormat from '@salesforce/i18n/dateTime.shortTimeFormat';
+import mediumTimeFormat from '@salesforce/i18n/dateTime.mediumTimeFormat';
+import locale from '@salesforce/i18n/locale';
+import timeZone from '@salesforce/i18n/timeZone';
+import { format as formatFns, parse as parseFns, parseISO } from 'date-fns';
+import { utcToZonedTime, zonedTimeToUtc, getTimezoneOffset } from 'date-fns-tz';
 const DATE_FORMAT = {
-    short: 'M/d/yyyy',
-    medium: 'yyyy/MM/dd',
-    long: 'MMMM d, yyyy',
+    short: shortDateFormat,
+    medium: mediumDateFormat,
+    long: longDateFormat,
 };
 const TIME_FORMAT = {
-    short: 'h:mm a',
-    medium: 'h:mm:ss a',
-    long: 'h:mm:ss a',
-};
-
-// The parseTime method normalizes the time format so that minor deviations are accepted
-const TIME_FORMAT_SIMPLE = {
-    short: 'h:m a',
-    medium: 'h:m:s a',
-    long: 'h:m:s a',
+    short: shortTimeFormat,
+    medium: mediumTimeFormat,
+    long: mediumTimeFormat,
 };
 
 // Only works with dates and iso strings
@@ -67,29 +54,20 @@ function formatDateUTC(value, format) {
 
 // Only works with a date object
 function formatTime(date, format) {
-    if (!isDate(date)) {
+    if (!isDateObject(date)) {
         return new Date('');
     }
-
-    const hours = ((date.getHours() + 11) % 12) + 1;
-    const suffix = date.getHours() >= 12 ? 'PM' : 'AM';
 
     switch (format) {
         case STANDARD_TIME_FORMAT:
             // 16:12:32.000
-            return `${pad(date.getHours())}:${pad(date.getMinutes())}:${pad(
-                date.getSeconds()
-            )}.${doublePad(date.getMilliseconds())}`;
+            return formatFns(date, STANDARD_TIME_FORMAT);
         case TIME_FORMAT.short:
-            // 4:12 PM;
-            return `${hours}:${pad(date.getMinutes())} ${suffix}`;
+            return formatFns(date, shortTimeFormat)
         case TIME_FORMAT.medium:
         case TIME_FORMAT.long:
         default:
-            // 4:12:32 PM;
-            return `${hours}:${pad(date.getMinutes())}:${pad(
-                date.getSeconds()
-            )} ${suffix}`;
+            return formatFns(date, mediumTimeFormat);
     }
 }
 
@@ -98,11 +76,11 @@ function formatTime(date, format) {
 // e.g. assume date is Mar 11 2019 00:00:00 GMT+1100:
 // formatDateTimeUTC(date) -> 2019-03-10  1:00:00 PM
 function formatDateTimeUTC(value) {
-    if (!isDate(value)) {
+    if (!isDateObject(value)) {
         return new Date('');
     }
     const date = new Date(value.getTime());
-    return `${formatDateUTC(date)}, ${formatTime(addTimezoneOffset(date))}`;
+    return formatFns(addTimezoneOffset(date), mediumDateTimeFormat);
 }
 
 // parses ISO8601 date/time strings. Currently only used to parse ISO time strings without a TZD. Some examples:
@@ -140,11 +118,8 @@ function parseDateTime(value, format) {
     if (format === STANDARD_DATE_FORMAT && isValidISODateTimeString(value)) {
         return parseDateTimeISO8601(value);
     }
-    if (Object.values(DATE_FORMAT).includes(format)) {
-        return parseFormattedDate(value, format);
-    }
-    if (Object.values(TIME_FORMAT_SIMPLE).includes(format)) {
-        return parseFormattedTime(value);
+    if (Object.values(DATE_FORMAT).includes(format) || Object.values(TIME_FORMAT).includes(format)) {
+        return parseFns(value, format, null, locale);
     }
     return null;
 }
@@ -235,105 +210,27 @@ function displayDuration(value) {
     return value.humanize('en');
 }
 
-// parses a time string formatted in en-US locale i.e. h:mm:ss a
-function parseFormattedTime(value) {
-    // for time strings it's easier to just split on :.\s
-    const values = value.trim().split(/[:.\s*]/);
-    // at least two parts i.e. 12 PM, and at most 5 parts i.e. 12:34:21.432 PM
-    const length = values.length;
-    if (!values || length < 2 || length > 5) {
-        return null;
-    }
-    const ampm = values[length - 1];
-    const isBeforeNoon = ampm.toLowerCase() === 'am';
-    const isAfternoon = ampm.toLowerCase() === 'pm';
-    // remove ampm
-    values.splice(-1, 1);
-    const allNumbers = values.every((item) => !isNaN(item));
-    if ((!isAfternoon && !isBeforeNoon) || !allNumbers) {
-        return null;
-    }
-    const hours = values[0];
-    const hour24 = pad(isAfternoon ? (hours % 12) + 12 : hours % 12);
-
-    const minutes = (length >= 3 && values[1]) || '0';
-    const seconds = (length >= 4 && values[2]) || '0';
-    const milliseconds = (length === 5 && values[3]) || '0';
-
-    const newDate = new Date(getTodayInISO());
-    newDate.setHours(hour24, minutes, seconds, milliseconds);
-
-    return isDate(newDate) ? newDate : null;
-}
-
-// parses a date string formatted in en-US locale, i.e. MMM d, yyyy
-function parseFormattedDate(value, format) {
-    // default to medium style pattern
-    let pattern = /^([a-zA-Z]{3})\s*(\d{1,2}),\s*(\d{4})$/;
-    switch (format) {
-        case DATE_FORMAT.short:
-            pattern = /^(\d{1,2})\/(\d{1,2})\/(\d{4})$/;
-            break;
-        case DATE_FORMAT.long:
-            pattern = /^([a-zA-Z]+)\s*(\d{1,2}),\s*(\d{4})$/;
-            break;
-        default:
-    }
-
-    // matches[1]: month, matches[2]: day, matches[3]: year
-    const match = pattern.exec(value.trim());
-    if (!match) {
-        return null;
-    }
-
-    let month = match[1];
-    const day = match[2];
-    const year = match[3];
-
-    // for long and medium style formats, we need to find the month index
-    if (format !== DATE_FORMAT.short) {
-        month = MONTH_NAMES.findIndex((item) =>
-            item.toLowerCase().includes(month.toLowerCase())
-        );
-        // the actual month for the ISO string is 1 more than the index
-        month += 1;
-    }
-
-    const isoValue = `${year}-${pad(month)}-${pad(day)}`;
-    const newDate = new Date(`${isoValue}T00:00:00.000Z`);
-
-    return isDate(newDate) ? addTimezoneOffset(newDate) : null;
-}
-
 function formatDateInternal(value, format, isUTC) {
     const date = getDate(value);
     if (!date) {
         // return Invalid Date
         return new Date('');
     }
-    if (isUTC && isDate(value)) {
+    if (isUTC && isDateObject(value)) {
         // if value is an ISO string, we already add the timezone offset when parsing the date string.
         addTimezoneOffset(date);
     }
 
     switch (format) {
         case STANDARD_DATE_FORMAT:
-            return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(
-                date.getDate()
-            )}`;
+            return formatFns(date, STANDARD_DATE_FORMAT);
         case DATE_FORMAT.short:
-            return `${
-                date.getMonth() + 1
-            }/${date.getDate()}/${date.getFullYear()}`;
+            return formatFns(date, DATE_FORMAT.short);
         case DATE_FORMAT.long:
-            return `${
-                MONTH_NAMES[date.getMonth()]
-            } ${date.getDate()}, ${date.getFullYear()}`;
+            return formatFns(date, DATE_FORMAT.long);
         case DATE_FORMAT.medium:
         default: {
-            return formatDateFns(date, DATE_FORMAT.medium);
-            // const shortMonthName = MONTH_NAMES[date.getMonth()].substring(0, 3);
-            // return `${shortMonthName} ${date.getDate()}, ${date.getFullYear()}`;
+            return formatFns(date, DATE_FORMAT.medium);
         }
     }
 }
@@ -355,7 +252,7 @@ function startOf(date, unit) {
     return date;
 }
 
-function isDate(value) {
+function isDateObject(value) {
     return (
         Object.prototype.toString.call(value) === '[object Date]' &&
         !isNaN(value.getTime())
@@ -368,12 +265,14 @@ function addTimezoneSuffix(value) {
 }
 
 function addTimezoneOffset(date) {
-    date.setMinutes(date.getMinutes() + date.getTimezoneOffset());
+    const offset = getTimezoneOffset(timeZone, date) / -60000
+    date.setMinutes(date.getMinutes() + offset);
     return date;
 }
 
 function subtractTimezoneOffset(date) {
-    date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+    const offset = getTimezoneOffset(timeZone, date) / -60000
+    date.setMinutes(date.getMinutes() - offset);
     return date;
 }
 
@@ -381,7 +280,7 @@ function getDate(value) {
     if (!value) {
         return null;
     }
-    if (isDate(value)) {
+    if (isDateObject(value)) {
         return new Date(value.getTime());
     }
     if (
