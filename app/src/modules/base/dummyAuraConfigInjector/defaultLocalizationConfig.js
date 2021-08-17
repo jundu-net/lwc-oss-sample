@@ -17,8 +17,8 @@ import shortTimeFormat from '@salesforce/i18n/dateTime.shortTimeFormat';
 import mediumTimeFormat from '@salesforce/i18n/dateTime.mediumTimeFormat';
 import locale from '@salesforce/i18n/locale';
 import timeZone from '@salesforce/i18n/timeZone';
-import { format as formatFns, parse as parseFns, parseISO } from 'date-fns';
-import { utcToZonedTime, zonedTimeToUtc, getTimezoneOffset } from 'date-fns-tz';
+import { format as formatFns, parse as parseFns } from 'date-fns';
+import { getTimezoneOffset } from 'date-fns-tz';
 const DATE_FORMAT = {
     short: shortDateFormat,
     medium: mediumDateFormat,
@@ -115,13 +115,19 @@ function parseDateTimeISO8601(value) {
 // called by the datepicker and calendar for parsing iso and formatted date strings
 // called by the timepicker to parse the formatted time string
 function parseDateTime(value, format) {
+    if (!value) {
+        return null;
+    }
     if (format === STANDARD_DATE_FORMAT && isValidISODateTimeString(value)) {
         return parseDateTimeISO8601(value);
     }
-    if (Object.values(DATE_FORMAT).includes(format) || Object.values(TIME_FORMAT).includes(format)) {
-        return parseFns(value, format, null, locale);
+    const parsedDateTime = parseFns(value, format, new Date(), { locale: locale });
+    if (Number.isNaN(parsedDateTime.getTime())) {
+        // Invalid Date
+        return null;
+    } else {
+        return parsedDateTime;
     }
-    return null;
 }
 
 // The input to this method is always an ISO string with timezone offset.
