@@ -6,18 +6,10 @@ module.exports = {
             from: 'src/resources/',
             to: 'dist/resources/'
         },
-        // {
-        //     from: 'node_modules/@salesforce-ux/design-system/assets',
-        //     to: 'src/assets'
-        // },
         {
             from: 'node_modules/@salesforce-ux/design-system/assets',
             to: 'dist/assets'
         },
-        // {
-        //     from: 'node_modules/@salesforce-ux/design-system/assets/styles/salesforce-lightning-design-system.css',
-        //     to: 'dist/assets/styles/salesforce-lightning-design-system.min.css'
-        // },
     ],
     devServer: {
         historyApiFallback: {
